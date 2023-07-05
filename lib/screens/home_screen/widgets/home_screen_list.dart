@@ -4,11 +4,13 @@ import 'journal_card.dart';
 List<JournalCard> generateListJournalCards(
     {required int windowPage,
     required DateTime currentDay,
-    required Map<String, Journal> database}) {
+    required Map<String, Journal> database,
+    required Function refreshFunction}) {
   // Cria uma lista de Cards vazios
   List<JournalCard> list = List.generate(
     windowPage + 1,
     (index) => JournalCard(
+      refreshFunction: refreshFunction,
       showedDate: currentDay.subtract(Duration(days: (windowPage) - index)),
     ),
   );
@@ -23,6 +25,7 @@ List<JournalCard> generateListJournalCards(
           .abs();
 
       list[difference] = JournalCard(
+        refreshFunction: refreshFunction,
         showedDate: list[difference].showedDate,
         journal: value,
       );
