@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webapi_first_course/helpers/weekday.dart';
 import 'package:flutter_webapi_first_course/models/journal.dart';
+import 'package:flutter_webapi_first_course/screens/commom/confirmation.dart';
+import 'package:flutter_webapi_first_course/services/journal_services.dart';
 import 'package:uuid/uuid.dart';
 
 class JournalCard extends StatelessWidget {
-
   final Journal? journal;
   final DateTime showedDate;
   final Function refreshFunction;
 
-  const JournalCard({Key? key, this.journal, required this.showedDate, required this.refreshFunction})
+  const JournalCard(
+      {Key? key,
+      this.journal,
+      required this.showedDate,
+      required this.refreshFunction})
       : super(key: key);
 
   @override
@@ -79,6 +84,9 @@ class JournalCard extends StatelessWidget {
                   ),
                 ),
               ),
+              IconButton(
+                  onPressed: () => removeJournal(context),
+                  icon: const Icon(Icons.delete)),
             ],
           ),
         ),
@@ -102,16 +110,15 @@ class JournalCard extends StatelessWidget {
   }
 
   callAddJournalScreen(BuildContext context, {Journal? journal}) {
-
     Journal innerJournal = Journal(
-    id: const Uuid().v1(), 
-    content: "", 
-    createdAt: showedDate, 
-    updatedAt: showedDate);
+        id: const Uuid().v1(),
+        content: "",
+        createdAt: showedDate,
+        updatedAt: showedDate);
 
     Map<String, dynamic> map = {};
 
-    if(journal != null) {
+    if (journal != null) {
       innerJournal = journal;
       map['is_editing'] = false;
     } else {
@@ -120,25 +127,49 @@ class JournalCard extends StatelessWidget {
 
     map['journal'] = innerJournal;
 
-    Navigator.pushNamed(context, "add-journal" , arguments: map).then((value) {
+    Navigator.pushNamed(context, "add-journal", arguments: map).then((value) {
       refreshFunction();
-      if(value != null && value == true) {
+      if (value != null && value == true) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(
-            'Registro efetuado com sucesso!',
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold
+          const SnackBar(
+            content: Text(
+              'Registro efetuado com sucesso!',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-          ),
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Houve uma falha no registro!'))
-        );
+            const SnackBar(content: Text('Houve uma falha no registro!')));
       }
     });
   }
-}
 
+  removeJournal(BuildContext context) {
+    JournalService service = JournalService();
+
+    if (journal != null) {
+      showConfirmationDialog(
+        context,
+        content:
+            "Deseja realmente remover este card da ${WeekDay(journal!.createdAt)}?",
+        affirmative: "Remover",
+      ).then((value) {
+        if (value != null) {
+          if (value) {
+            service.delete(journal!.id).then((value) {
+              if (value) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Removido com sucesso!'),
+                  ),
+                );
+                refreshFunction();
+              }
+            });
+          }
+        }
+      });
+    }
+  }
+}
