@@ -14,14 +14,20 @@ Future<dynamic> showConfirmationDialog(BuildContext context, {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false), 
-            child: const Text("Cancelar")
+            child: const Text(
+              "Cancelar",
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.black54
+              ),
+              )
             ),
           TextButton(
             onPressed: () => Navigator.pop(context, true), 
             child: Text(
               affirmative.toUpperCase(),
               style: const TextStyle(
-                color: Color.fromARGB(255, 111, 157, 255),
+                color: Colors.red,
                 fontWeight: FontWeight.bold
               ),
               ),

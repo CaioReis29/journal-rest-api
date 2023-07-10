@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_webapi_first_course/helpers/weekday.dart';
 import 'package:flutter_webapi_first_course/models/journal.dart';
 import 'package:flutter_webapi_first_course/screens/commom/confirmation.dart';
 import 'package:flutter_webapi_first_course/services/journal_services.dart';
 import 'package:uuid/uuid.dart';
+import '../../../helpers/logout.dart';
+import '../../commom/exception_dialog.dart';
 
 class JournalCard extends StatelessWidget {
   final Journal? journal;
@@ -35,6 +38,7 @@ class JournalCard extends StatelessWidget {
             border: Border.all(
               color: Colors.black87,
             ),
+            borderRadius: BorderRadius.circular(5)
           ),
           child: Row(
             children: [
@@ -45,7 +49,7 @@ class JournalCard extends StatelessWidget {
                     width: 75,
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(
-                      color: Colors.black54,
+                      color: Color.fromARGB(255, 55, 111, 138),
                       border: Border(
                           right: BorderSide(color: Colors.black87),
                           bottom: BorderSide(color: Colors.black87)),
@@ -90,7 +94,10 @@ class JournalCard extends StatelessWidget {
               ),
               IconButton(
                   onPressed: () => removeJournal(context),
-                  icon: const Icon(Icons.delete)),
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                    )),
             ],
           ),
         ),
@@ -105,7 +112,10 @@ class JournalCard extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             "${WeekDay(showedDate).short} - ${showedDate.day}",
-            style: const TextStyle(fontSize: 12),
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500
+              ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -169,9 +179,21 @@ class JournalCard extends StatelessWidget {
                     content: Text('Removido com sucesso!'),
                   ),
                 );
+
                 refreshFunction();
               }
-            });
+            }).catchError(
+              (error) {
+                logout(context);
+              },
+              test: (error) => error is TokenNotValidException,
+            ).catchError(
+              (error) {
+                var innerError = error as HttpException;
+                showExceptionDialog(context, content: innerError.message);
+              },
+              test: (error) => error is HttpException,
+            );
           }
         }
       });

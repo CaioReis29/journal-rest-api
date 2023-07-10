@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_webapi_first_course/constants/constants.dart';
+import 'package:flutter_webapi_first_course/screens/commom/exception_dialog.dart';
 import 'package:flutter_webapi_first_course/screens/home_screen/widgets/home_screen_list.dart';
 import 'package:flutter_webapi_first_course/services/journal_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../helpers/logout.dart';
 import '../../models/journal.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -40,9 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Título basado no dia atual
+        backgroundColor: ConstantsColors.primaryColor,
         title: Text(
-          "${currentDay.day}  |  ${currentDay.month}  |  ${currentDay.year}",
+          "${currentDay.day}  /  ${currentDay.month}  /  ${currentDay.year}",
         ),
         actions: [
           IconButton(
@@ -55,9 +60,25 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           children: [
             ListTile(
-              onTap: () => logout(),
-              title: const Text('Sair'),
-              leading: const Icon(Icons.logout_rounded),
+              onTap: () => logout(context),
+              title: const Text(
+                'Sair',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500
+                ),
+                ),
+              leading: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.red[200],
+                  shape: BoxShape.circle
+                ),
+                child: const Icon(
+                  Icons.logout,
+                  color: Colors.black87,
+                ),
+              ),
             )
           ],
         ),
@@ -100,15 +121,18 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         Navigator.pushReplacementNamed(context, "login");
       }
-    });
+    }).catchError((error) {
+      logout(context);
+    },
+    test: (error) => error is TokenNotValidException,
+    ).catchError((error) {
+      var innerError = error as HttpException;
+        showExceptionDialog(context, content: innerError.message);
+    },
+    test: (error) => error is HttpException,
+    );
 
   }
 
-  logout() {
-    SharedPreferences.getInstance()
-    .then((prefs) {
-      prefs.clear();
-      Navigator.pushReplacementNamed(context, 'login');
-    });
   }
-}
+

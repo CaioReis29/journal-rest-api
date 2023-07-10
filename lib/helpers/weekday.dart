@@ -8,31 +8,31 @@ class WeekDay {
     int weekday = date.weekday;
     switch (weekday) {
       case 7:
-        short = "dom";
+        short = "Dom";
         long = "Domingo";
         break;
       case 1:
-        short = "seg";
+        short = "Seg";
         long = "Segunda-Feira";
         break;
       case 2:
-        short = "ter";
+        short = "Ter";
         long = "Terça-Feira";
         break;
       case 3:
-        short = "qua";
+        short = "Qua";
         long = "Quarta-Feira";
         break;
       case 4:
-        short = "qui";
+        short = "Qui";
         long = "Quinta-Feira";
         break;
       case 5:
-        short = "sex";
+        short = "Sex";
         long = "Sexta-Feira";
         break;
       case 6:
-        short = "sab";
+        short = "Sab";
         long = "Sábado";
         break;
     }
@@ -40,6 +40,6 @@ class WeekDay {
   
   @override
   String toString() {
-    return "${long.toLowerCase()}, ${date.day}, ${date.month}, ${date.year}";
+    return "${long.toLowerCase()}, ${date.day} / ${date.month}/ ${date.year}";
   }
 }

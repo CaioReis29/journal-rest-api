@@ -1,6 +1,10 @@
+// ignore_for_file: must_be_immutable
+
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_webapi_first_course/constants/constants.dart';
 import 'package:flutter_webapi_first_course/screens/commom/confirmation.dart';
 import 'package:flutter_webapi_first_course/screens/commom/exception_dialog.dart';
 import 'package:flutter_webapi_first_course/services/auth_service.dart';
@@ -8,35 +12,35 @@ import 'package:flutter_webapi_first_course/services/auth_service.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  AuthService service = AuthService();
+  final AuthService service = AuthService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: ConstantsColors.primaryColor,
       body: Container(
         padding: const EdgeInsets.all(16),
-        margin: const EdgeInsets.all(32),
+        margin: const EdgeInsets.all(16),
         decoration:
-            BoxDecoration(border: Border.all(width: 8), color: Colors.white),
+            BoxDecoration(
+              border: Border.all(width: 1), color: Colors.white,
+              borderRadius: BorderRadius.circular(15)
+              ),
         child: Form(
           child: Center(
             child: SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(
-                    Icons.bookmark,
-                    size: 64,
-                    color: Colors.brown,
-                  ),
+                  Image.asset('assets/logo_login.png'),
                   const Text(
-                    "Simple Journal",
+                    "Querido Diário...",
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  const Text("por Caio Reis",
+                  const Text("Developed by Caio Reis",
                       style: TextStyle(fontStyle: FontStyle.italic)),
                   const Padding(
                     padding: EdgeInsets.all(8.0),
@@ -101,6 +105,10 @@ class LoginScreen extends StatelessWidget {
         });
     },
     //test: (error) => error is UserNofFindException,
+    ).catchError((error) {
+      showExceptionDialog(context, content: "O servidor demorou para responder :(\nTente novamente mais tarde.");
+    },
+    test: (error) => error is TimeoutException,
     );
   }
 }
