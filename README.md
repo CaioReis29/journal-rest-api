@@ -79,8 +79,8 @@
 
 ```bash
   # Digite o comando que ativa o server JSON
-  $ 
-json-server-auth O_SEU_IP_AQUI db.json -r routes.json```
+  $ json-server-auth O_SEU_IP_AQUI db.json -r routes.json
+```
 
 ```bash
   # Conecte o device com a IDE que você está usando (InteliJ, Android Studio ou VS Code)
