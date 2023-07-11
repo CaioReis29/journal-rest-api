@@ -44,6 +44,7 @@
  Para rodar aplicações flutter, certifique-se se sua máquina possui as seguintes tecnologias:
 - DART SDK
 - FLUTTER SDK
+- Node.JS instalado na sua máquina 
 - Servidor local (JSON server) ativo
 - Um device físico (seu celular conectado por um USB) ou um emulador (como o android studio)
 
@@ -72,15 +73,23 @@
 ```
 
 ```bash
+  # Em um outro terminal, entre na pasta do servidor para ativá-lo
+  $ cd server
+```
+
+```bash
+  # Digite o comando que ativa o server JSON
+  $ 
+json-server-auth O_SEU_IP_AQUI db.json -r routes.json```
+
+```bash
   # Conecte o device com a IDE que você está usando (InteliJ, Android Studio ou VS Code)
 ```
 
 ```bash
-  # Com todas as dependências nesserárias, basta digitar o comando
+  # Com todas as dependências nesserárias, basta voltar para o primeiro terminal e digitar o comando
   $ flutter run
 ```
-## :dart: Status do projeto
-# *Apenas as telas criadas até o momento*
 
 ## :handshake: Colaboradores
 <table>
