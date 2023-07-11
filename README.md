@@ -43,10 +43,17 @@
  Para rodar aplicações flutter, certifique-se se sua máquina possui as seguintes tecnologias:
 - DART SDK
 - FLUTTER SDK
+- Servidor local (JSON server) ativo
 - Um device físico (seu celular conectado por um USB) ou um emulador (como o android studio)
 
 ## Dependências do PUBSPEC: 
-- custom_clippers: ^2.0.0
+
+   cupertino_icons: ^1.0.2 
+   uuid: ^3.0.6 
+   http: ^0.13.3 
+   http_interceptor: ^1.0.2 
+   logger: ^1.1.0 
+   shared_preferences: ^2.0.15
 
 ## :rocket: Rodando o projeto
 
