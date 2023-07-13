@@ -4,21 +4,19 @@
  
 <div style="text-align: center"><table><tr>
   <td style="text-align: center, width: 150">
+
+  <img src="https://github.com/CaioReis29/journal-rest-api/assets/114621145/c77321c9-24dd-4040-a132-17b61bad3234" width="350" />
     
- ![gif-1-api](https://github.com/CaioReis29/journal-rest-api/assets/114621145/c77321c9-24dd-4040-a132-17b61bad3234)
 
   </td>
   <td style="text-align: center, width: 180">
-    
-  ![gif-2-api](https://github.com/CaioReis29/journal-rest-api/assets/114621145/6ef8ca46-2318-48d4-b302-b3704f09a7ae)
 
+  <img src="https://github.com/CaioReis29/journal-rest-api/assets/114621145/6ef8ca46-2318-48d4-b302-b3704f09a7ae" width="350" />
   </td>
 
   <td style="text-align: center, width: 180">
     
- ![gif-3-api](https://github.com/CaioReis29/journal-rest-api/assets/114621145/a6f88361-14fa-42fd-bd47-904f8093a859)
-
-
+ <img src="https://github.com/CaioReis29/journal-rest-api/assets/114621145/a6f88361-14fa-42fd-bd47-904f8093a859" width="350" />
     
   </td>
 
